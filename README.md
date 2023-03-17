@@ -1,2 +1,3 @@
 # Plume_conduit
-Contain plume conduits plotting files.
+1. Contain plume conduits plotting files.
+2. ASPECT for plume shape modeling.
