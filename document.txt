@@ -1,0 +1,6 @@
+1. dnew depth in km
+2. dlnVs/dT %/K
+3. T temperature in K
+4. dlnVs_m %
+5. dlnVs_l % with 25% error
+6. dlnVs_u % with 25% error
