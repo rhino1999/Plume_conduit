@@ -5,7 +5,7 @@ filenames = {
 'conduit_major\Glad-m25\EAR_200_g.csv';
 'conduit_major\Glad-m25\Easter_200_g.csv';
 'conduit_major\Glad-m25\Iceland_200_g.csv';
-'conduit_major\Glad-m25\Tristan_200_g_2.csv';
+% 'conduit_major\Glad-m25\Tristan_200_g_2.csv';
 'conduit_major\Glad-m25\Louisville_200_g.csv';
 'conduit_major\Glad-m25\Reunion_200_g.csv';
 'conduit_major\Glad-m25\Hawaii_200_g.csv';
@@ -21,7 +21,7 @@ filenames = {
 'conduit_major\Glad-m25\San_Felix_200_g.csv';
 'conduit_major\Glad-m25\Marion_200_g.csv';
 'conduit_major\Glad-m25\Meteor_200_g.csv';
-'conduit_major\Glad-m25\Vema_200_g.csv';
+% 'conduit_major\Glad-m25\Vema_200_g.csv';
 'conduit_major\Glad-m25\Trindade_200_g.csv';
 'conduit_major\Glad-m25\St_H_200_g.csv';
 'conduit_major\Glad-m25\Cape_200_g.csv';
@@ -68,73 +68,16 @@ filenames = {
 % fn26 = 'conduit_major/JM_200_g.csv';
 'conduit_major/SEMUCB/Hoggar_200.csv'};
 % fn28 = 'conduit_major/SEMUCB/Fernando_200.csv';
-
+%%
 % Load each file and save the matrix into a cell array (called f)
 for i = 1:length(filenames)
     f{i} = readmatrix(filenames{i});
     [ang{i},dep{i}] = cal_angle(f{i}(:,1),f{i}(:,2),f{i}(:,3));
 end
 %%
-plume_name = {
-    'EAR';'Easter';'Iceland';'Tristan';'Louisville';'Reunion';'Hawaii';'Samoa';'Tahiti';
-    'Macdonald';'Pitcairn';'Galapagos';'Marquesas';'Kerguelen';'Caroline';'Juan Fer';'San Felix';
-    'Marion';'Meteor';'Vema';'Trindade';'St Helena';'Cape Verde';'Canary';'Azores';'Jan Mayen';
-    'Hoggar';'Fernando'};
-indx_m = [11 33 35 44 37 40 34 41 43 21 24 15 22 36 7 19 26 38 23 31 30 42 6 5 1 17];
-y = linspace(0,3000,100);
-% pacific
-figure(1)
-j=1;
-for i=1:26
-    if i == 2 || i==7 || i==8 || i==9 || i==10 || i==11 || i==13 || i==12 
-    subplot(2,4,j)
-    plot(tilt(indx_m(i)).ang,tilt(indx_m(i)).dep,'Marker','o','MarkerSize',2,'MarkerFaceColor','#0072BD')
-    hold on
-    plot(ang{i},dep{i},'Marker','diamond','MarkerSize',2,'MarkerFaceColor','#D95319')
-    hold on
-    plot(ones(length(y))*60,y,'Color',[.7 .7 .7])
-    if j==1 || j==5
-       ylabel('depth (km)');
-    elseif j==8
-       legend('model','picked')
-    end
-    title(plume_name(i))
-    xlabel('tilted angle')
-    ylim([0 3000])
-    xlim([0 100])
-    xticks([0 25 50 75 100])
-    set(gca,'Ydir','reverse');
-    j=j+1;
-    end
-end
-% atlantic
-figure(2)
-j=1;
-for i=1:26
-    if i == 3 || i==22 || i==23 || i==24
-    subplot(1,4,j)
-    plot(tilt(indx_m(i)).ang,tilt(indx_m(i)).dep,'Marker','o','MarkerSize',2,'MarkerFaceColor','#0072BD')
-    hold on
-    plot(ang{i},dep{i},'Marker','diamond','MarkerSize',2,'MarkerFaceColor','#D95319')
-    hold on
-    plot(ones(length(y))*60,y,'Color',[.7 .7 .7])
-    if j==1
-       ylabel('depth (km)');
-    elseif j==4
-       legend('model','picked')
-    end
-    title(plume_name(i))
-    xlabel('tilted angle')
-    ylim([0 3000])
-    xlim([0 100])
-    xticks([0 25 50 75 100])
-    set(gca,'Ydir','reverse');
-    j=j+1;
-    end
-end
-%%
 % load Steinberger model conduits
-dirs = {'44_ms','12_ms'};
+dirs = {'Steinberger_Antretter_Plumes\Steinberger_Antretter_Plumes\44_ms',...
+    'Steinberger_Antretter_Plumes\Steinberger_Antretter_Plumes\12_ms'};
 idxplume=1;
 for idir=1:2
     % load all of the plumes in this directory
@@ -155,11 +98,80 @@ for idir=1:2
         idxplume = idxplume+1;
     end
 end
+
 % calculate angles
 for i=1:length(plumes_model)
     [t(i).x,t(i).y,t(i).z]=sph2cart(plumes_model(i).lon/180*pi,plumes_model(i).lat/180*pi,plumes_model(i).r);
     [tilt(i).ang,tilt(i).dep] = cal_angle(t(i).x,t(i).y,t(i).z);
     tilt(i).name = plumes_model(i).shortname;
+end
+%%
+% plume_name = {
+%     'EAR';'Easter';'Iceland';'Tristan';'Louisville';'Reunion';'Hawaii';'Samoa';'Tahiti';
+%     'Macdonald';'Pitcairn';'Galapagos';'Marquesas';'Kerguelen';'Caroline';'Juan Fer';'San Felix';
+%     'Marion';'Meteor';'Vema';'Trindade';'St Helena';'Cape Verde';'Canary';'Azores';'Jan Mayen';
+%     'Hoggar';'Fernando'}; % semucb
+
+plume_name = {
+    'EAR';'Easter';'Iceland';'Louisville';'Reunion';'Hawaii';'Samoa';'Tahiti';
+    'Macdonald';'Pitcairn';'Galapagos';'Marquesas';'Kerguelen';'Caroline';'Juan Fer';'San Felix';
+    'Marion';'Meteor';'Trindade';'St Helena';'Cape Verde';'Canary';'Azores';'Jan Mayen';
+    'Hoggar';'Fernando'};% glad
+% indx_m = [11 33 35 44 37 40 34 41 43 21 24 15 22 36 7 19 26 38 23 31 30 42 6 5 1 17];
+indx_m = [11 33 35 37 40 34 41 43 21 24 15 22 36 7 19 26 38 23 30 42 6 5 1 18 17 14];% glad
+y = linspace(0,3000,100);
+% pacific
+figure(1)
+j=1;
+for i=1:26
+%     if i == 2 || i==7 || i== 8 || i==9 || i==10 || i==11 || i == 12 || i == 13
+    if i == 12 || i==2 || i==7 || i== 8 || i==9 || i==10 || i==6 || i==11 || i==4 || i==5
+    subplot(2,5,j)
+    plot(tilt(indx_m(i)).ang,tilt(indx_m(i)).dep,'Marker','o','MarkerSize',2,'MarkerFaceColor','#0072BD',"LineWidth",1.5)
+    hold on
+    plot(ang{i},dep{i},'Marker','diamond','MarkerSize',2,'MarkerFaceColor','#D95319',"LineWidth",1.5)
+    hold on
+    plot(ones(length(y))*60,y,'Color',[.7 .7 .7])
+    if j==1 || j==6
+       ylabel('depth (km)',"FontSize",14);
+    elseif j==10
+       legend('model','picked',"FontSize",14)
+    end
+    title(plume_name(i),"FontSize",18)
+    xlabel('tilted angle',"FontSize",14)
+    ylim([0 3000])
+    xlim([0 100])
+    xticks([0 50 100])
+    yticks([0 410 660 1250 3000])
+    set(gca,'Ydir','reverse');
+    j=j+1;
+    end
+end
+
+% atlantic
+figure(2)
+j=1;
+for i=1:26
+%     if i == 3 || i==22 || i==23 || i==24
+    if i == 3 || i==22 || i==21 || i==20 || i==13
+    subplot(1,5,j)
+    plot(tilt(indx_m(i)).ang,tilt(indx_m(i)).dep,'Marker','o','MarkerSize',2,'MarkerFaceColor','#0072BD',"LineWidth",1.5)
+    hold on
+    plot(ang{i},dep{i},'Marker','diamond','MarkerSize',2,'MarkerFaceColor','#D95319',"LineWidth",1.5)
+    hold on
+    plot(ones(length(y))*60,y,'Color',[.7 .7 .7])
+    if j==1
+       ylabel('depth (km)',"FontSize",14);
+    end
+    title(plume_name(i),"FontSize",18)
+    xlabel('tilted angle',"FontSize",14)
+    ylim([0 3000])
+    xlim([0 100])
+    xticks([0 50 100])
+    yticks([0 410 660 1250 3000])
+    set(gca,'Ydir','reverse');
+    j=j+1;
+    end
 end
 %%
 figure(1)

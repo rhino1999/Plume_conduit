@@ -1,4 +1,4 @@
-clear all
+%clear all
 % note - this is the path to the plume-discovery files:
 addpath ../
 % load semucb
@@ -32,7 +32,7 @@ filenames = {
 'conduit_major/SEMUCB/Hoggar_200.csv'};
 % fn28 = 'conduit_major/SEMUCB/Fernando_200.csv';
 %%
-clear all
+%clear all
 addpath ../
 % load glad-m25
 filenames = {
@@ -57,7 +57,7 @@ filenames = {
 'conduit_major\Glad-m25\Meteor_200_g.csv';
 % 'conduit_major\Glad-m25\Vema_200_g.csv';
 'conduit_major\Glad-m25\Trindade_200_g.csv';
-% 'conduit_major\Glad-m25\St_H_200_g.csv';
+'conduit_major\Glad-m25\St_H_200_g.csv';
 'conduit_major\Glad-m25\Cape_200_g.csv';
 'conduit_major\Glad-m25\Canary_200_g.csv';
 'conduit_major\Glad-m25\Azores_200_g.csv';
@@ -82,10 +82,10 @@ for i=1:length(filenames)
     depth = 6371*(1.0-r);
     plumes{i} = PlumeConduit(lon,lat,depth);
 end
-
+%%
 % load Steinberger model conduits
-dirs = {'Steinberger_Antretter_Plumes (1)\Steinberger_Antretter_Plumes\44_ms',...
-    'Steinberger_Antretter_Plumes (1)\Steinberger_Antretter_Plumes\12_ms'};
+dirs = {'Steinberger_Antretter_Plumes\Steinberger_Antretter_Plumes\44_ms',...
+    'Steinberger_Antretter_Plumes\Steinberger_Antretter_Plumes\12_ms'};
 idxplume=1;
 for idir=1:2
     % load all of the plumes in this directory
@@ -112,7 +112,8 @@ for i=1:length(plumes_model)
     depth = 6371*(1.0-xyz.r);
     plumes_stn{i} = PlumeConduit(xyz.lon,xyz.lat,depth);
 end
-semucb = TomographicModel(); % load SEMUCB-WM1 as a tomographic model object
+%%
+semucb = TomographicModel(); % load SEMUCB-WM1/GLAD-M25 as a tomographic model object
 %% Calculate Vs along a plume conduit:
 i = 11; %hawaii = 7
 j = 24;
@@ -132,9 +133,8 @@ legend('picked','model')
 %% Boschi et al., 2007
 % calculate slowness for all (picked-model)/model Vs
 indx_p = 26;
-indx_m = [11 33 35 37 40 34 41 43 21 24 15 22 36 7 19 26 38 23 30 6 5 1 18 17 14];
-% indx_m = [11 33 35 44 37 40 34 41 43 21 24 15 22 36 7 19 26 38 23 31 30 42 6 5 1 18 17 14];
-% indx_m = [11 33 35 44 37 40 34 41 43 21 24 15 22 36 7 19 26 38 23 31 30 42 6 5 1 17];
+% indx_m = [11 33 35 44 37 40 34 41 43 21 24 15 22 36 7 19 26 38 23 31 30 42 6 5 1 17];% semucb(26)
+indx_m = [11 33 35 37 40 34 41 43 21 24 15 22 36 7 19 26 38 23 30 42 6 5 1 18 17 14];% glad(26)
 i=1;
 n = 200;% interpolate points
 depth_upper = 250;% in km
@@ -146,6 +146,8 @@ plume_Vs_sum_stn = zeros(1,200);
 plume_Vs_sum_vertical = zeros(1,200);
 while i <= indx_p
     j=indx_m(i);
+%     if i == 2 || i==7 || i== 8 || i==9 || i==10 || i==11 || i == 12 || i == 13 || i == 3 || i==22 || i==23 || i==24
+%     if i == 12 || i==2 || i==7 || i== 8 || i==9 || i==10 || i==6 || i==11 || i==4 || i==5 || i == 3 || i==22 || i==21 || i==20 || i==13
     % picked plumes
     interpolation_depths = linspace(depth_upper,depth_lower,n);
     plume_Vs(i,:) = plumes{i}.calculateVs(semucb,interpolation_depths);
@@ -175,19 +177,20 @@ while i <= indx_p
     plume_Vs_stn(i,:) = plumes_stn{j}.calculateVs(semucb,interpolation_depths);
     plume_Vs_stn_avg(i) = sum(plume_Vs_stn_norm(i,:))/n;
     plume_Vs_sum_stn = plume_Vs_sum_stn + plume_Vs_stn_norm(i,:);
+%     end
     i=i+1;
 end
-plume_Vs_sum = plume_Vs_sum/indx_p;
-plume_Vs_sum_stn = plume_Vs_sum_stn/indx_p;
-plume_Vs_sum_vertical = plume_Vs_sum_vertical/indx_p;
+plume_Vs_sum = plume_Vs_sum/12;% indx_p
+plume_Vs_sum_stn = plume_Vs_sum_stn/12;
+plume_Vs_sum_vertical = plume_Vs_sum_vertical/12;
 %%
-figure(2)
-plot(plume_Vs_stn_avg)
-hold on
-plot(plume_Vs_avg)
-legend('model','picked')
-title('Average \delta Vs of 26 plumes')
-ylabel('Average \delta Vs%')
+% figure(2)
+% plot(plume_Vs_stn_avg)
+% hold on
+% plot(plume_Vs_avg)
+% legend('model','picked')
+% title('Average \delta Vs of 26 plumes')
+% ylabel('Average \delta Vs%')
 
 figure(3)
 plot(plume_Vs_sum_stn,interpolation_depths,'Marker','diamond','MarkerSize',4,'MarkerIndices',1:10:200,'MarkerFaceColor','#0072BD')
@@ -195,7 +198,7 @@ hold on
 plot(plume_Vs_sum,interpolation_depths,'Marker','o','MarkerSize',4,'MarkerIndices',1:10:200,'MarkerFaceColor','#D95319')
 hold on
 plot(plume_Vs_sum_vertical,interpolation_depths,'Marker','o','MarkerSize',4,'MarkerIndices',1:10:200,'MarkerFaceColor','#77AC30')
-legend('model','picked','vertical')
+legend('model','picked','vertical',"FontSize",14)
 title('Average \delta Vs of 26 plumes along mantle')
 xlabel('Mean \delta Vs%')
 ylabel('depth (km)');
@@ -204,13 +207,13 @@ set(gca,'Ydir','reverse');
 %%
 plume_name = {
     'EAR';'Easter';'Iceland';'Tristan';'Louisville';'Reunion';'Hawaii';'Samoa';'Tahiti';
-    'Macdonald';'Pitcairn';'Gala';'Marquesas';'Kerguelen';'Caroline';'Juan_Fer';'San_Felix';
+    'Macdonald';'Pitcairn';'Galapagos';'Marquesas';'Kerguelen';'Caroline';'Juan_Fer';'San_Felix';
     'Marion';'Meteor';'Vema';'Trindade';'St Helena';'Cape Verde';'Canary';'Azores';'Jan Mayon';'Hoggar'};
 
 % plume_name = {
 %     'EAR';'Easter';'Iceland';'Louisville';'Reunion';'Hawaii';'Samoa';'Tahiti';
 %     'Macdonald';'Pitcairn';'Galapagos';'Marquesas';'Kerguelen';'Caroline';'Juan Fer';'San Felix';
-%     'Marion';'Meteor';'Trindade';'Cape Verde';'Canary';'Azores';'Jan Mayen';
+%     'Marion';'Meteor';'Trindade';'St Helena';'Cape Verde';'Canary';'Azores';'Jan Mayen';
 %     'Hoggar';'Fernando'};
 
 % load referenve dlnVs
@@ -219,24 +222,26 @@ ref = readmatrix("conduit_major\foo.csv");
 figure(4)
 j=1;
 for i=1:26
-    if i == 12 || i==2 || i==7 || i== 8 || i==9 || i==10 || i==13 || i==11
+    if i == 12 || i==2 || i==7 || i== 8 || i==9 || i==10 || i==6 || i==11 || i==4 || i==5
+%     if i == 2 || i==7 || i== 8 || i==9 || i==10 || i==11 || i == 12 || i == 13
     subplot(2,4,j)
-    plot(plume_Vs_stn(i,:),interpolation_depths,'Marker','diamond','MarkerSize',2,'MarkerIndices',1:10:200,'MarkerFaceColor','#0072BD')
+    plot(plume_Vs_stn(i,:),interpolation_depths,'Marker','diamond','MarkerSize',2,'MarkerIndices',1:10:200,'MarkerFaceColor','#0072BD',"LineWidth",1)
     hold on
-    plot(plume_Vs(i,:),interpolation_depths,'Marker','o','MarkerSize',2,'MarkerIndices',1:10:200,'MarkerFaceColor','#D95319')
+    plot(plume_Vs(i,:),interpolation_depths,'Marker','o','MarkerSize',2,'MarkerIndices',1:10:200,'MarkerFaceColor','#D95319',"LineWidth",1)
     hold on
-    plot(vsver(i,:),interpolation_depths,'Marker','o','MarkerSize',4,'MarkerIndices',1:10:200,'MarkerFaceColor','#77AC30')
+    plot(vsver(i,:),interpolation_depths,'Marker','o','MarkerSize',2,'MarkerIndices',1:10:200,'MarkerFaceColor','#77AC30',"LineWidth",1)
     hold on
     v = [ref([5,1],:) fliplr(ref([6,1],:))]';
     f = 1:1:360;
     patch("Faces",f,"Vertices",v, "FaceColor",'#4DBEEE', "EdgeColor",'none',"FaceAlpha",0.5)
-    if j==1 || j==5
-       ylabel('depth (km)');
+    if j==1 || j==5 
+       ylabel('depth (km)',"FontSize",14);
     elseif j==8
        legend('model','picked','vertical')
     end
-    title(plume_name(i))
-    xlabel('\delta Vs%')
+    title(plume_name(i),"FontSize",16)
+    xlabel('\delta Vs%',"FontSize",14)
+    yticks([0 410 660 1250 3000])
     xlim([-3 1])
     set(gca,'Ydir','reverse');
     j=j+1;
@@ -246,24 +251,24 @@ end
 figure(5)
 j=1;
 for i=1:26
-    if i == 3 || i==22 || i==23 || i==24
+    if i == 3 || i==22 || i==21 || i==20 || i==13
+%     if i == 3 || i==22 || i==23 || i==24
     subplot(1,4,j)
-    plot(plume_Vs_stn(i,:),interpolation_depths,'Marker','diamond','MarkerSize',2,'MarkerIndices',1:10:200,'MarkerFaceColor','#0072BD')
+    plot(plume_Vs_stn(i,:),interpolation_depths,'Marker','diamond','MarkerSize',2,'MarkerIndices',1:10:200,'MarkerFaceColor','#0072BD',"LineWidth",1)
     hold on
-    plot(plume_Vs(i,:),interpolation_depths,'Marker','o','MarkerSize',2,'MarkerIndices',1:10:200,'MarkerFaceColor','#D95319')
+    plot(plume_Vs(i,:),interpolation_depths,'Marker','o','MarkerSize',2,'MarkerIndices',1:10:200,'MarkerFaceColor','#D95319',"LineWidth",1)
     hold on
-    plot(vsver(i,:),interpolation_depths,'Marker','o','MarkerSize',4,'MarkerIndices',1:10:200,'MarkerFaceColor','#77AC30')
+    plot(vsver(i,:),interpolation_depths,'Marker','o','MarkerSize',2,'MarkerIndices',1:10:200,'MarkerFaceColor','#77AC30',"LineWidth",1)
     hold on
     v = [ref([5,1],:) fliplr(ref([6,1],:))]';
     f = 1:1:360;
     patch("Faces",f,"Vertices",v, "FaceColor",'#4DBEEE', "EdgeColor",'none',"FaceAlpha",0.5)
     if j==1
-       ylabel('depth (km)');
-    elseif j==4
-       legend('model','picked','vertical')
+       ylabel('depth (km)',"FontSize",14);
     end
-    title(plume_name(i))
-    xlabel('\delta Vs%')
+    title(plume_name(i),"FontSize",16)
+    xlabel('\delta Vs%',"FontSize",14)
+    yticks([0 410 660 1250 3000])
     xlim([-3 1])
     set(gca,'Ydir','reverse');
     j=j+1;
