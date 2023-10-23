@@ -1,28 +1,28 @@
 <?xml version="1.0"?>
 <VTKFile type="PolyData" version="1.0" byte_order="LittleEndian" header_type="UInt64">
   <PolyData>
-    <Piece NumberOfPoints="7" NumberOfVerts="0" NumberOfLines="1" NumberOfStrips="0" NumberOfPolys="0">
+    <Piece NumberOfPoints="15" NumberOfVerts="0" NumberOfLines="1" NumberOfStrips="0" NumberOfPolys="0">
       <PointData>
       </PointData>
       <CellData>
       </CellData>
       <Points>
-        <DataArray type="Float64" Name="Points" NumberOfComponents="3" format="binary" RangeMin="0.7760871211436039" RangeMax="0.9999999548601481">
-          qAAAAAAAAAAAAABAyMDoPwAAACD/PsO/AAAAwH6z479godeCmWboPwoNlWmHgM6/43xZct4f4b8sQ0ZdSA7nP888rmafWMm/HEYkyK6137+k5Xffb3XmP8kJQldmY7+/X+8vOFU537/QH2Za8NzlP43goZZwF7a/7yL5jecF3r9BDNUQKEflP00p/Rli/qq/P3k9CybG3L8AAAAgTZrkPwAAAMCECaO/AAAAILmh278=
+        <DataArray type="Float64" Name="Points" NumberOfComponents="3" format="binary" RangeMin="0.5488843056696977" RangeMax="1.0013360226821963">
+          aAEAAAAAAADiIYyfxr3oP74XX7THC8O/V7WkoxzM478jhEcbRyzmP3CUvDrHgMS/VwirsYQ15L8Pml33ViTmP04pr5XQXcK/bhXEQNc+4781sistI/XlP0MfLGNDN7u/lZnS+lsC4r/sbMg/MwjjP5VPReD+Erm/sd8T61T547/JOhxdpTviP9zJlpteGLm/++WTFcNV479X6lkQyvvhP6FLOPQWD7u/tFn1udoK4r/i8YG+eIjhP+eynyNUM7y/YDWWODEc4b9NH+w1bBPhP6qpX5aaNbm/dynd/Pcv4L83Bg1UHlHgP1csHeezO7i/EFxbFajP3r+lBAxkbFbfPyPsIK4B+La/mqXafcA83b98jxGD6v3dP3EbhFQVXLa/LBKTflYO3L8gZYIEeYvcP270Xw/87LS/VkxEl07A2r9Z5182TQbbP+p2lyQ/sLO/K5G08Zdj2b9RV8bQ6ljZP7TTIK7HUrK/ykON6tji178=
           <InformationKey name="L2_NORM_RANGE" location="vtkDataArray" length="2">
             <Value index="0">
-              0.77608712114
+              0.54888430567
             </Value>
             <Value index="1">
-              0.99999995486
+              1.0013360227
             </Value>
           </InformationKey>
           <InformationKey name="L2_NORM_FINITE_RANGE" location="vtkDataArray" length="2">
             <Value index="0">
-              0.77608712114
+              0.54888430567
             </Value>
             <Value index="1">
-              0.99999995486
+              1.0013360227
             </Value>
           </InformationKey>
         </DataArray>
@@ -36,11 +36,11 @@
         </DataArray>
       </Verts>
       <Lines>
-        <DataArray type="Int64" Name="connectivity" format="binary" RangeMin="0" RangeMax="6">
-          OAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAgAAAAAAAAADAAAAAAAAAAQAAAAAAAAABQAAAAAAAAAGAAAAAAAAAA==
+        <DataArray type="Int64" Name="connectivity" format="binary" RangeMin="0" RangeMax="14">
+          eAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAgAAAAAAAAADAAAAAAAAAAQAAAAAAAAABQAAAAAAAAAGAAAAAAAAAAcAAAAAAAAACAAAAAAAAAAJAAAAAAAAAAoAAAAAAAAACwAAAAAAAAAMAAAAAAAAAA0AAAAAAAAADgAAAAAAAAA=
         </DataArray>
-        <DataArray type="Int64" Name="offsets" format="binary" RangeMin="7" RangeMax="7">
-          CAAAAAAAAAAHAAAAAAAAAA==
+        <DataArray type="Int64" Name="offsets" format="binary" RangeMin="15" RangeMax="15">
+          CAAAAAAAAAAPAAAAAAAAAA==
         </DataArray>
       </Lines>
       <Strips>

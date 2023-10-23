@@ -7,22 +7,22 @@
       <CellData>
       </CellData>
       <Points>
-        <DataArray type="Float64" Name="Points" NumberOfComponents="3" format="binary" RangeMin="0.5453327468923511" RangeMax="0.9984211247945338">
-          aAEAAAAAAACzbCCrs7DoP+pVjNeadMO/8g3ZrGOv478wdLjT4n3oP2ibb/2Y+c2/cEsfsgCC4L9ESGGE+vDnP/JH28hqPsu/LOQZZFcA4L+/Q1SOOQznP49S7q7+Dcq/g2apSvQj3796ZW2bcabmP8+UDaz0J76/VP7nWKob378NRakPo7XlP7u4wG9TDbm/fKrSyAZW3r830ONMKy3lP4OQH3ImJbm/8S0g1mU73L9B8jST6iXlP/eUGJVw57+/NTJxEkfT17+VqP4H9lPkP5aRl63bVcG//jc7Ixcy1r+RV15DfsvjP+F28FBlvMC/6U2XSEB21L9zCeANTjPjP9MQZ7lR07+/5wryQKO30r9Zeq6yuYniPyhRqm1+Hb2/2xGRBoz10L/odORSdvDhP8H139lGvLu/vPZYogSdzb8jx0UE2WLhP3fm4BXulr6/f2F2VxhGxr+zbCDLcnXgP9OrGM/997m/xjdkkzg5w78=
+        <DataArray type="Float64" Name="Points" NumberOfComponents="3" format="binary" RangeMin="0.5494880497423247" RangeMax="0.9984211909389744">
+          aAEAAAAAAAAbZJKRs7DoP2+4j9yadMO/5dU5BmSv478VAU7v4n3oP7ZKsDic+c2/raWAtP+B4L8VVb/S+fDnP7mMmxpoPsu/uwuUFFgA4L+KlGbzOAznP7qHhO/9Dcq/y9WPTfIj37/jpDDvcabmPyUhkbbxJ76/E9TwLawb37+VYdwNorXlPx2CmaVTDbm/6lxRSghW3r/ScTWyKy3lP280NiomJbm/CKwcWmQ73L/R3MnH6gjlP6CcwlJxYsC/Sz40QZFi2L9wIvq19VPkPyNL5ljeVcG/HofB/BUy1r/fUbE6vJbjP+6GkYTgbMC/dAoK7mRC1b+hm7qQxcziP0KFB8yJK72/LWmwPHNG1L/fPcfbntfhP/p/nlw57Lu/B5dhiRuC078kZ3l08fHgP9L+FCuDhrq/lLKSBWZ70r9435aBOiHgP0VcduXXh7i/o23lYyyQ0b9/Rbo2v4HeP2TVpQboYra/m38rPFKT0L8=
           <InformationKey name="L2_NORM_RANGE" location="vtkDataArray" length="2">
             <Value index="0">
-              0.54533274689
+              0.54948804974
             </Value>
             <Value index="1">
-              0.99842112479
+              0.99842119094
             </Value>
           </InformationKey>
           <InformationKey name="L2_NORM_FINITE_RANGE" location="vtkDataArray" length="2">
             <Value index="0">
-              0.54533274689
+              0.54948804974
             </Value>
             <Value index="1">
-              0.99842112479
+              0.99842119094
             </Value>
           </InformationKey>
         </DataArray>
