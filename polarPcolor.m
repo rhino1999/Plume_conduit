@@ -164,7 +164,7 @@ end
 %% PLot colorbar if specified
 if colBar==1,
     c =colorbar;
-    caxis([-2,2])
+    caxis([-3,3])
     colorbar('off')
 else
     c = [];
