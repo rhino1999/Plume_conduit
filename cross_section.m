@@ -1,39 +1,77 @@
 % cross section maker
 % Load tomographic model
-tomofile1 = 'semucb-wm1.nc';
+d_theta = deg2rad(0.5);d_phi = deg2rad(0.5);
+tomofile1 = '/Users/lucille/Library/CloudStorage/Box-Box/My Box Notes/semucb-2014-ucb-vs-viz-only.r0.1.nc';
 info = ncinfo(tomofile1);
 depth_s = ncread(tomofile1,'depth');
 lon_s = ncread(tomofile1,'longitude');
 lat_s = ncread(tomofile1,'latitude');
-dvs_s = ncread(tomofile1,'vsvoigt');
+vs_or_s = ncread(tomofile1,'vs');
+vs_mean_s = zeros(1,length(depth_s));
+vs_sum_s = zeros(1,length(depth_s));
+dvs_s = zeros(length(lon_s),length(lat_s),length(depth_s));
+for i = 1:1:length(depth_s)
+    cell_vs = 0.25*(vs_or_s(1:end-1,1:end-1,i)+...
+        vs_or_s(2:end,1:end-1,i)+...
+        vs_or_s(1:end-1,2:end,i)+...
+        vs_or_s(2:end,2:end,i));
+    lonc = (lon_s(1:end-1)+lon_s(2:end))/2;
+    latc = (lat_s(1:end-1)+lat_s(2:end))/2;
 
-tomofile2 = 'glad-m25-vs-0.0-n4.nc';
+    cell_weight = (cosd(latc) * ones(length(lonc),1)')';
+    vs_mean_s(i) = sum(sum(cell_weight .* cell_vs)) / sum(sum(cell_weight));
+    dvs_s(:,:,i) = (vs_or_s(:,:,i) - vs_mean_s(i)) / vs_mean_s(i)*100; % dvs in %
+end
+
+tomofile2 = '/Users/lucille/Library/CloudStorage/Box-Box/My Box Notes/SEMATL23-vs.r0.0.nc';
 depth_g = ncread(tomofile2,'depth');
-lat_g = ncread(tomofile2,'latitude');
 lon_g = ncread(tomofile2,'longitude');
-vsh = ncread(tomofile2,'vsh');
-vsv = ncread(tomofile2,'vsv');
-vs_or = sqrt(vsv.^2+vsh.^2);
-vs_mean = zeros(1,342);
-vs_sum = zeros(1,342);
-dvs_g = zeros(721,361,342);
-d_theta = deg2rad(0.5);d_phi = deg2rad(0.5);
-for i = 1:1:342
-    cell_vs = 0.25*(vs_or(1:end-1,1:end-1,i) + ...
-        vs_or(2:end,1:end-1,i)+...
-        vs_or(1:end-1,2:end,i)+...
-        vs_or(2:end,2:end,i));
+lat_g = ncread(tomofile2,'latitude');
+vs_or_g = ncread(tomofile2,'Vs');
+vs_mean_g = zeros(1,length(depth_g));
+vs_sum_g = zeros(1,length(depth_g));
+dvs_g = zeros(length(lon_g),length(lat_g),length(depth_g));
+for i = 1:1:length(depth_g)
+    cell_vs = 0.25*(vs_or_g(1:end-1,1:end-1,i) + ...
+        vs_or_g(2:end,1:end-1,i)+...
+        vs_or_g(1:end-1,2:end,i)+...
+        vs_or_g(2:end,2:end,i));
     lonc = (lon_g(1:end-1)+lon_g(2:end))/2;
     latc = (lat_g(1:end-1)+lat_g(2:end))/2;
 
     cell_weight = (cosd(latc) * ones(length(lonc),1)')';
-    vs_mean(i) = sum(sum(cell_weight .* cell_vs)) / sum(sum(cell_weight));
-    dvs_g (:,:,i) = (vs_or(:,:,i) - vs_mean(i)) / vs_mean(i)*100; % dvs in %
+    vs_mean_g(i) = sum(sum(cell_weight .* cell_vs)) / sum(sum(cell_weight));
+    dvs_g(:,:,i) = (vs_or_g(:,:,i) - vs_mean_g(i)) / vs_mean_g(i)*100; % dvs in %
 end
 
+% tomofile2 = 'glad-m25-vs-0.0-n4.nc';
+% depth_g = ncread(tomofile2,'depth');
+% lat_g = ncread(tomofile2,'latitude');
+% lon_g = ncread(tomofile2,'longitude');
+% vsh = ncread(tomofile2,'vsh');
+% vsv = ncread(tomofile2,'vsv');
+% vs_or = sqrt(vsv.^2+vsh.^2);
+% vs_mean = zeros(1,342);
+% vs_sum = zeros(1,342);
+% dvs_g = zeros(721,361,342);
+% for i = 1:1:342
+%     cell_vs = 0.25*(vs_or(1:end-1,1:end-1,i) + ...
+%         vs_or(2:end,1:end-1,i)+...
+%         vs_or(1:end-1,2:end,i)+...
+%         vs_or(2:end,2:end,i));
+%     lonc = (lon_g(1:end-1)+lon_g(2:end))/2;
+%     latc = (lat_g(1:end-1)+lat_g(2:end))/2;
+% 
+%     cell_weight = (cosd(latc) * ones(length(lonc),1)')';
+%     vs_mean(i) = sum(sum(cell_weight .* cell_vs)) / sum(sum(cell_weight));
+%     dvs_g (:,:,i) = (vs_or(:,:,i) - vs_mean(i)) / vs_mean(i)*100; % dvs in %
+% end
+
 [llons,llats,dds] = ndgrid(lon_s,lat_s,depth_s);
+dds = double(dds);
 Fs = griddedInterpolant(llons,llats,dds,dvs_s);
 [llong,llatg,ddg] = ndgrid(lon_g,lat_g,depth_g);
+ddg = double(ddg);
 Fg = griddedInterpolant(llong,llatg,ddg,dvs_g);
 
 file = readmatrix('data/nuvel_1_plates.txt');
@@ -183,10 +221,10 @@ a(4,:)=[0.73,0.1,0.25,0.3];b(4,:)=[0.4,0.01,0.45,0.45];
 lon = zeros(2,2);lat = zeros(2,2);
 
 % choose different cross sections
-path(1,1:4)=[2 3 14 18];
-path(2,1:4)=[2 3 16 20];
-lon(2,1)= -22.5;lat(2,1)= 0;lon(2,2)= -11.5;lat(2,2)= 43; % CC
-lon(1,1)= -160;lat(1,1)= -32.5;lon(1,2)= -112;lat(1,2)= -12;% MP
+% path(1,1:4)=[2 3 14 18];
+% path(2,1:4)=[2 3 16 20];
+% lon(2,1)= -22.5;lat(2,1)= 0;lon(2,2)= -11.5;lat(2,2)= 43; % CC
+% lon(1,1)= -160;lat(1,1)= -32.5;lon(1,2)= -112;lat(1,2)= -12;% MP
 
 % path(1,1:2)=[22 20];
 % path(2,1:2)=[24 22];
@@ -247,6 +285,10 @@ lon(1,1)= -160;lat(1,1)= -32.5;lon(1,2)= -112;lat(1,2)= -12;% MP
 % path(2,1:2) = [8 25];
 % lon(1,1)= -98;lat(1,1)= 20;lon(1,2)= -90;lat(1,2)=-40;% Gala
 % lon(2,1)= -180;lat(2,1)= -22;lon(2,2)= -123;lat(2,2)= -8;% Tahiti
+
+%lon(1,1)= -156;lat(1,1)= 5;lon(1,2)= -165;lat(1,2)= -45;% Rarotonga
+lon(2,1)= 29;lat(2,1)= 37;lon(2,2)= 44;lat(2,2)= -5;% Red Sea
+lon(1,1)= 40;lat(1,1)= 39;lon(1,2)= 30;lat(1,2)= -20;% Red Sea
 %%
 for p_count = 1:4
     line_num = fix((p_count+1)/2);
@@ -275,18 +317,22 @@ ax1 = axes;
 subplot(2,2,p_count,ax1)
 if rem(p_count,2)==1
     [~,c,size] = polarPcolor(ax1,radius,arctrk,vs_s,'circlesPos',pos,'Nspokes',2);% ,'Rticklabel',Rticks
-%     if line_num == 1
-%         title("SEMUCB-WM1","FontSize",14)
-%     end
+    if line_num == 1
+        title("SEMUCB-WM1","FontSize",14)
+    end
 else
     [~,c,size] = polarPcolor(ax1,radius,arctrk,vs_g,'circlesPos',pos,'Nspokes',2);
-%     if line_num == 1
+    if line_num == 1
+         title("SEMATL23","FontSize",14)
 %         title("GLAD-M25","FontSize",14)
-%     end
+    end
 end
 % colormap(flipud(colormap(crameri('vik'))));
 colormap(ax1,crameri('roma',20))
-%ylabel(c,'\deltaVs(%)','FontSize',14);set(c,'location','WestOutside');
+c1 = colorbar();
+set(c1,'location','SouthOutside');c1.Position = [0.4 0.48 0.18 0.03];
+c1.Label.String = '\deltaVs(%)';c1.Label.FontSize = 14;
+% ylabel(c,'\deltaVs(%)','FontSize',14);set(c,'location','WestOutside');
 hold on
 
 mark =zeros(3,5);
@@ -314,16 +360,16 @@ framem;tightmap;
 for i=1:length(plate_boundaries)
     geoshow(plate_boundaries{i}(:,2),plate_boundaries{i}(:,1),linewidth=1, color='r')
 end
-for i=1:length(path(1,:))
-    if rem(p_count,2)==1
-        scatterm(ax2,flipud(plume_path1{path(1,i)}(:,2)),flipud(plume_path1{path(1,i)}(:,1)),ones(length(plume_path1{path(1,i)}(:,1)),1)*pt,flipud(plume_path1{path(1,i)}(:,3)),'.');
-        hold on
-    else
-        scatterm(ax2,flipud(plume_path2{path(2,i)}(:,2)),flipud(plume_path2{path(2,i)}(:,1)),ones(length(plume_path2{path(2,i)}(:,1)),1)*pt,flipud(plume_path2{path(2,i)}(:,3)),'.');
-    end
-end
-colormap(ax2,crameri('imola',6));
-caxis(ax2,[0 3000])
+% for i=1:length(path(1,:))
+%     if rem(p_count,2)==1
+%         scatterm(ax2,flipud(plume_path1{path(1,i)}(:,2)),flipud(plume_path1{path(1,i)}(:,1)),ones(length(plume_path1{path(1,i)}(:,1)),1)*pt,flipud(plume_path1{path(1,i)}(:,3)),'.');
+%         hold on
+%     else
+%         scatterm(ax2,flipud(plume_path2{path(2,i)}(:,2)),flipud(plume_path2{path(2,i)}(:,1)),ones(length(plume_path2{path(2,i)}(:,1)),1)*pt,flipud(plume_path2{path(2,i)}(:,3)),'.');
+%     end
+% end
+% colormap(ax2,crameri('imola',6));
+% caxis(ax2,[0 3000])
 geoshow(surface_lonlatr(:,2),surface_lonlatr(:,1),"DisplayType","point","Marker","diamond","MarkerSize",5,'MarkerEdgeColor','g',"MarkerFaceColor","g")
 geoshow(lattrk,lontrk,"DisplayType","line","LineWidth",1,"Color","k")
 geoshow(arcmark(2,2:5),arcmark(1,2:5),"DisplayType","point","marker","o","MarkerSize",5,'MarkerEdgeColor','k')
@@ -338,7 +384,7 @@ end
 % set(c2,'location','SouthOutside');c2.Position = [0.4 0.47 0.2 0.02];
 % c2.Label.String = 'Depth (km)';c2.Label.FontSize = 14;
 %%
-exportgraphics(fig1,"figure\xsection\MP+CC.jpg","Resolution",600)
+exportgraphics(fig1,"/Users/lucille/Library/CloudStorage/Box-Box/My Box Notes/Figure/Redsea.jpg","Resolution",300)
 
 % mannual interpolate function
 function [xq,yq,zq] = interplt4(f,npts)
