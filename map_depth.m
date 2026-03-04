@@ -1,32 +1,60 @@
 % load semucb
+% filenames = {
+% 'conduit_major/SEMUCB/Azores_200.csv';
+% 'conduit_major/SEMUCB/Canary_200.csv';
+% 'conduit_major/SEMUCB/Cape_200.csv';
+% 'conduit_major/SEMUCB/Caroline_200.csv';
+% 'conduit_major/SEMUCB/EAR_200.csv';
+% 'conduit_major/SEMUCB/Easter_200.csv';
+% 'conduit_major/SEMUCB/Gala_200.csv';
+% 'conduit_major/SEMUCB/Hawaii_200.csv';
+% 'conduit_major/SEMUCB/Hoggar_200.csv';
+% 'conduit_major/SEMUCB/Iceland_200.csv';
+% 'conduit_major/SEMUCB/Juan_Fer_200.csv';
+% 'conduit_major/SEMUCB/Kerguelen_200.csv';
+% 'conduit_major/SEMUCB/Louisville_200.csv';
+% 'conduit_major/SEMUCB/Mac_200.csv';
+% 'conduit_major/SEMUCB/Marion_200.csv';
+% 'conduit_major/SEMUCB/Marquesas_200.csv';
+% 'conduit_major/SEMUCB/Meteor_200.csv';
+% 'conduit_major/SEMUCB/Pitcairn_200.csv';
+% 'conduit_major/SEMUCB/Reunion_200.csv';
+% 'conduit_major/SEMUCB/Samoa_200.csv';
+% 'conduit_major/SEMUCB/San_Felix_200.csv';
+% 'conduit_major/SEMUCB/St_H_200.csv';
+% 'conduit_major/SEMUCB/Tahiti_200.csv';
+% 'conduit_major/SEMUCB/Trindade_200.csv';
+% 'conduit_major/SEMUCB/Tristan_200.csv';
+% 'conduit_major/SEMUCB/Vema_200.csv'};
 filenames = {
-'conduit_major/SEMUCB/Azores_200.csv';
-'conduit_major/SEMUCB/Canary_200.csv';
-'conduit_major/SEMUCB/Cape_200.csv';
-'conduit_major/SEMUCB/Caroline_200.csv';
-'conduit_major/SEMUCB/EAR_200.csv';
-'conduit_major/SEMUCB/Easter_200.csv';
-'conduit_major/SEMUCB/Gala_200.csv';
-'conduit_major/SEMUCB/Hawaii_200.csv';
-'conduit_major/SEMUCB/Hoggar_200.csv';
-'conduit_major/SEMUCB/Iceland_200.csv';
-'conduit_major/SEMUCB/Juan_Fer_200.csv';
-'conduit_major/SEMUCB/Kerguelen_200.csv';
-'conduit_major/SEMUCB/Louisville_200.csv';
-'conduit_major/SEMUCB/Mac_200.csv';
-'conduit_major/SEMUCB/Marion_200.csv';
-'conduit_major/SEMUCB/Marquesas_200.csv';
-'conduit_major/SEMUCB/Meteor_200.csv';
-'conduit_major/SEMUCB/Pitcairn_200.csv';
-'conduit_major/SEMUCB/Reunion_200.csv';
-'conduit_major/SEMUCB/Samoa_200.csv';
-'conduit_major/SEMUCB/San_Felix_200.csv';
-'conduit_major/SEMUCB/St_H_200.csv';
-'conduit_major/SEMUCB/Tahiti_200.csv';
-'conduit_major/SEMUCB/Trindade_200.csv';
-'conduit_major/SEMUCB/Tristan_200.csv';
-'conduit_major/SEMUCB/Vema_200.csv'};
-
+'/Users/lucille/Downloads/SEMATL_csv/azorez_trc1.csv';
+'/Users/lucille/Downloads/SEMATL_csv/canary_trc2.csv';
+'/Users/lucille/Downloads/SEMATL_csv/capev_trc1.csv';
+'/Users/lucille/Downloads/SEMATL_csv/caroline_trc1.csv';
+'/Users/lucille/Downloads/SEMATL_csv/comores_trc1_redo.csv';
+'/Users/lucille/Downloads/SEMATL_csv/eafrica_trc2.csv';
+'/Users/lucille/Downloads/SEMATL_csv/easterisl_trc1.csv';
+'/Users/lucille/Downloads/SEMATL_csv/galapagos_trc1.csv';
+'/Users/lucille/Downloads/SEMATL_csv/hawaii_trc2.csv';
+'/Users/lucille/Downloads/SEMATL_csv/hoggar_trc1.csv';
+'/Users/lucille/Downloads/SEMATL_csv/iceland_trc2.csv';
+'/Users/lucille/Downloads/SEMATL_csv/janmayen_trc1.csv';
+'/Users/lucille/Downloads/SEMATL_csv/jaunfern_trc2.csv';
+% '/Users/lucille/Downloads/SEMATL_csv/Kerguelen_200.csv';
+'/Users/lucille/Downloads/SEMATL_csv/louisville_trc1.csv';
+'/Users/lucille/Downloads/SEMATL_csv/marionisl_trc2.csv';
+'/Users/lucille/Downloads/SEMATL_csv/marquesas_trc1.csv';
+'/Users/lucille/Downloads/SEMATL_csv/mcdonald_trc1.csv';
+'/Users/lucille/Downloads/SEMATL_csv/meteor_trc1.csv';
+'/Users/lucille/Downloads/SEMATL_csv/Pitcairn_trc1.csv';
+'/Users/lucille/Downloads/SEMATL_csv/reunion_trc1.csv';
+'/Users/lucille/Downloads/SEMATL_csv/samoa_trc1.csv';
+'/Users/lucille/Downloads/SEMATL_csv/sanfelix_trc1.csv';
+'/Users/lucille/Downloads/SEMATL_csv/sthelena_trc1.csv';
+'/Users/lucille/Downloads/SEMATL_csv/tahiti_trc1.csv';
+% '/Users/lucille/Downloads/SEMATL_csv/Trindade_200.csv';
+'/Users/lucille/Downloads/SEMATL_csv/tristan_trc1.csv';
+'/Users/lucille/Downloads/SEMATL_csv/vema_trc1_redo.csv'};
 % % load glad-m25
 % filenames = {
 % 'conduit_major/Glad-m25/Azores_200_g.csv';
@@ -67,17 +95,17 @@ filenames = {
 
 % load tomographic model
 % tomofile = 'data/semucb-wm1.nc';% https://ds.iris.edu/ds/products/emc-semucb-wm1/
-% tomofile = '/Users/lucille/Library/CloudStorage/Box-Box/My Box Notes/SEMATL23-vs.r0.0.nc';
+tomofile = '/Users/lucille/Library/CloudStorage/Box-Box/My Box Notes/SEMATL23-vs.r0.0.nc';
 % tomofile = '/Users/lucille/Library/CloudStorage/Box-Box/My Box Notes/glad-m25-vs-0.0-n4.nc';% https://ds.iris.edu/ds/products/emc-glad-m25/
-tomofile = '/Users/lucille/Library/CloudStorage/Box-Box/My Box Notes/GLAD-M35.r0.1-n4.nc';
+% tomofile = '/Users/lucille/Library/CloudStorage/Box-Box/My Box Notes/GLAD-M35.r0.1-n4.nc';
 
 % For GLAD
-vsh = ncread(tomofile,'vph');
-vsv = ncread(tomofile,'vpv');
-vs_or = sqrt((2*vsv.^2+vsh.^2)/3);
+% vsh = ncread(tomofile,'vph');
+% vsv = ncread(tomofile,'vpv');
+% vs_or = sqrt((2*vsv.^2+vsh.^2)/3);
 
 % For SEM
-% vs_or = ncread(tomofile,'Vs');
+vs_or = ncread(tomofile,'Vs');
 
 lat = ncread(tomofile,'latitude');
 lon = ncread(tomofile,'longitude');
@@ -187,7 +215,8 @@ cmax = 2890;
 n_pt = 16;
 % linkaxes([ax1,ax2])
 for i = 1:26
-    if i == 4 || i==6 || i==7 || i==8 || i== 11 || i==13 || i==14 || i==16 || i==18 || i==20 || i==21 || i==23 || i==1 || i == 2 || i==3 || i==10 || i==12 || i==19 || i==25 || i==22 % SEMUCB   
+    if 1 == 1
+%     if i == 4 || i==6 || i==7 || i==8 || i== 11 || i==13 || i==14 || i==16 || i==18 || i==20 || i==21 || i==23 || i==1 || i == 2 || i==3 || i==10 || i==12 || i==19 || i==25 || i==22 % SEMUCB   
 %     if i == 4 || i==6 || i==8 || i==9 || i==12 || i==15 || i==16 || i==18 || i==20 || i==22 || i==23 || i==25 || i == 2 || i==3 || i==11 ||i==14 || i==24 || i==26 || i==1 || i==21  % Glad
         n_pt = length(plume_path{i}(:,1)); % use it if want to plot the whole conduit
         for k = 1:length(plume_path{i}(1:n_pt,1))
